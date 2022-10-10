@@ -79,6 +79,77 @@ class DetalleOrden {
     }
 }
 
+class Cliente {
+    private final String nombre;
+    private final String rut;
+    public Cliente(String n, String r){
+        nombre = n;
+        rut = r;
+    }
+    public String getNombre(){
+        return nombre;
+    }
+    public String getRut(){
+        return rut;
+    }
+    public String toStringCliente(){
+        return "Nombre: " + nombre + "\n" + "RUT: " + rut + "\n";
+    }
+}
+
+class DocTributario {
+    private String numero;
+    private String rut;
+    private Date fecha;
+    private int tipoDoc;
+    DocTributario(String n, String r, Date f, int td){
+        numero = n;
+        rut = r;
+        fecha = f;
+        tipoDoc = td;
+    }
+    public String getNumero(){
+        return numero;
+    }
+    public String getRut(){
+        return rut;
+    }
+    public Date getFecha(){
+        return fecha;
+    }
+    public String toStringDoc(){
+        if(tipoDoc == 1){
+          return "Documento: Boleta\nNumero: "+numero+"\nRUT:"+rut+"\nFecha: "+fecha+"\n";    
+        }
+        if(tipoDoc == 2){
+          return "Documento: Factura\nNumero: "+numero+"\nRUT:"+rut+"\nFecha: "+fecha+"\n";    
+        }
+        return "";
+    }
+}
+
+class Boleta extends DocTributario {
+    public Boleta(String n, String r, Date f){
+        super(n,r,f,1);
+    }
+}
+
+class Factura extends DocTributario {
+    public Factura(String n, String r, Date f){
+        super(n,r,f,2);
+    }
+}
+
+class Direccion {
+    private final String Direccion;
+    public Direccion(String d){
+        Direccion = d;
+    }
+    public String toStringDireccion(){
+        return Direccion;
+    }
+}
+
 public class Tareaprog {
     public static void main(String[] args) {
     }
