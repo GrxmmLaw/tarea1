@@ -79,6 +79,70 @@ class DetalleOrden {
     }
 }
 
+bstract class Pago {
+    private float monto;
+    private Date fecha;
+    private int tipoPago;
+    public Pago(float m, Date f, int tp){
+        monto = m;
+        fecha = f;
+        tipoPago = tp;
+    }
+    public float getMonto(){
+        return monto;
+    }
+    public Date getFecha(){
+        return fecha;
+    }
+    public int getTipoPago(){
+        return tipoPago;
+    }
+    public float Devolucion(float t, float p){
+        if(monto + p > t){
+            return monto + p - t;
+        }
+        else{
+            return 0;
+        }
+    }
+    abstract public String toStringPago();
+}
+
+class Efectivo extends Pago {
+    public Efectivo(float m, Date f){
+        super(m,f,1);
+    }
+    public String toStringPago(){
+        return "Pago por Efectivo\nMonto: "+super.getMonto()+"                Fecha: "+super.getFecha()+"\n";
+    }
+}
+
+class Transferencia extends Pago {
+    private String banco;
+    private String numCuenta;
+    public Transferencia(String b, String n, float m, Date f){
+        super(m, f,2);
+        banco = b;
+        numCuenta = n;
+    }
+    public String toStringPago(){
+        return "Pago por Transferencia\nMonto: "+super.getMonto()+"                Fecha: "+super.getFecha()+"\nBanco: "+banco+"Numero de Cuenta"+numCuenta+ "\n";
+    }
+}
+
+class Tarjeta extends Pago{
+    private final String tipo;
+    private final String numTransaccion;
+    public Tarjeta(String t, String n, float m, Date f){
+        super(m, f,3);
+        tipo = t;
+        numTransaccion = n;
+    }
+    public String toStringPago(){
+        return "Pago por Tarjeta\nMonto: "+super.getMonto()+"                Fecha: "+super.getFecha()+"Tarjeat Tipo: "+tipo+"\nNumero de Transaccion: "+numTransaccion+"\n";
+    }
+}
+
 class Cliente {
     private final String nombre;
     private final String rut;
