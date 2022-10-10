@@ -214,6 +214,105 @@ class Direccion {
     }
 }
 
+class OrdenCompra {
+    private Date fecha;
+    private String estado;
+    private ArrayList<Pago> Pagos;
+    private ArrayList<DetalleOrden> Do;
+    private Cliente usuario;
+    private Direccion dir;
+    private DocTributario DT;
+    private float Total;
+    private float TotalSinIVA;
+    private float IVA;
+    private float peso;
+    private float pagado = 0;
+    private float vuelto = 0;
+    public OrdenCompra(Cliente c, DocTributario D, Date f, Direccion dr){
+        Do = new ArrayList<>();
+        Pagos = new ArrayList<>();
+        usuario = c;
+        DT = D;
+        fecha = f;
+        dir = dr;
+        estado = "Pendiente";
+        pagado = (float)0;
+    }
+    public void addDetalleOrden(DetalleOrden n){
+        Do.add(n);
+    }
+    public void addPago(Pago p){
+        if(pagado < Total){
+            Pagos.add(p);
+            pagado +=p.getMonto();
+        }if(pagado >= Total){
+            if(p.getTipoPago()==1){
+                vuelto = p.Devolucion(Total, pagado);
+            }
+            estado = "Pagado";
+            pagado = Total;
+        }
+    }
+    public float calcPrecio(){
+        float precioTotal = 0;
+        for(int i = 0; i< Do.size(); i++){
+            precioTotal += Do.get(i).calcPrecio();
+        }
+        Total = precioTotal;
+        return precioTotal;
+    }
+    public float calcPrecioSinIVA(){
+        float precioTotal = 0;
+        for(int i = 0; i< Do.size(); i++){
+            precioTotal += Do.get(i).calcPrecio()/1.19;
+        }
+        TotalSinIVA = precioTotal;
+        return precioTotal;
+    }
+    public float calcIVA(){
+        float precioTotal = 0;
+        for(int i = 0; i< Do.size(); i++){
+            precioTotal += Do.get(i).calcPrecio();
+        }
+        IVA = precioTotal*(float)0.19;
+        return precioTotal*(float)0.19;
+    }
+    public float calcPeso(){
+        float pesoTotal = 0;
+        for(int i = 0; i< Do.size(); i++){
+            pesoTotal += Do.get(i).calcPeso();
+        }
+        peso = pesoTotal;
+        return pesoTotal;
+    }
+    public String toStringOrdenCompra(){
+        String oc = "";
+        oc += "---------------------------------------------\n";
+        oc += usuario.toStringCliente();
+        oc += dir.toStringDireccion()+"\n";
+        oc += "---------------------------------------------\n";
+        oc += DT.toStringDoc();
+        oc += "---------------------------------------------\n";
+        oc += "Estado: "+estado+"\n";
+        oc += "Fecha: "+fecha+"\n";
+        oc += "---------------------------------------------\n";
+        oc += "Lista de Pagos: \n";
+        for(int i = 0; i < Pagos.size(); i++){
+            oc += "---------------------------------------------\n";
+            oc += Pagos.get(i).toStringPago();
+        }
+        oc += "---------------------------------------------\n";
+        for(int i = 0; i < Do.size(); i++){
+            oc += "Detalle de Orden numero " + i+"\n";
+            oc += "---------------------------------------------\n";
+            oc += Do.get(i).toStringDetalle();
+        }
+        oc += "PRECIO TOTAL: " + Total+"\nPAGADO:"+pagado+"\nVUELTO: "+vuelto+"\nTOTAL SIN IVA: "+TotalSinIVA+"\nIVA TOTAL: "+IVA+"\nPESO TOTAL: "+peso+"\n";
+        return oc;
+    }
+    
+}
+
 public class Tareaprog {
     public static void main(String[] args) {
     }
