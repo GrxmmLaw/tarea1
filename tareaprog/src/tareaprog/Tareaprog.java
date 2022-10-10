@@ -79,7 +79,7 @@ class DetalleOrden {
     }
 }
 
-bstract class Pago {
+abstract class Pago {
     private float monto;
     private Date fecha;
     private int tipoPago;
@@ -315,6 +315,90 @@ class OrdenCompra {
 
 public class Tareaprog {
     public static void main(String[] args) {
+        Articulo Polera = new Articulo(100, "Polera", "Polera de Algodón", 3990);
+        Articulo Buzo = new Articulo(500, "Buzo", "Pantalon tipo Buzo", 14990);
+        Articulo Jeans = new Articulo(950, "Jeans", "Pantalon tipo jeans", 20990);
+        Articulo Zapatilla = new Articulo(190, "Zapatillas", "Zapatillas Urbanas", 40990);
+        Articulo Poleron = new Articulo(400, "Poleron", "Poleron", 15990);
+        
+        Cliente Alfonse = new Cliente("Alfonse", "4.679.435-0");
+        Boleta BAlfonse = new Boleta("0002332","4.679.435-0", new Date());
+        Direccion DAlfonse = new Direccion("Artotzka, Orvech Vonor-197");
+        
+        Cliente Edward = new Cliente("Edward", "3.457.997-2");
+        Factura FEdward = new Factura("0423452","3.457.997-2", new Date());
+        Direccion DEdward = new Direccion("Kolechia, Grestin Oriental-511");
+        
+        DetalleOrden d1 = new DetalleOrden();
+        DetalleOrden d2 = new DetalleOrden();
+        DetalleOrden d3 = new DetalleOrden();
+        OrdenCompra O1 = new OrdenCompra(Alfonse, BAlfonse, new Date(), DAlfonse);
+        OrdenCompra O2 = new OrdenCompra(Edward, FEdward, new Date(), DEdward);
+        
+        d1.addArticulo(Polera);
+        d1.addArticulo(Polera);
+        d1.addArticulo(Buzo);
+        d1.addArticulo(Jeans);
+        d1.addArticulo(Zapatilla);
+        d1.calcPrecio();
+        d1.calcPrecioSinIva();
+        d1.calcIVA();
+        d1.calcPeso();
+        
+        d2.addArticulo(Polera);
+        d2.addArticulo(Buzo);
+        d2.addArticulo(Zapatilla);
+        d2.addArticulo(Zapatilla);
+        d2.addArticulo(Zapatilla);
+        d2.addArticulo(Poleron);
+        d2.calcPrecio();
+        d2.calcPrecioSinIva();
+        d2.calcIVA();
+        d2.calcPeso();
+        
+        d3.addArticulo(Buzo);
+        d3.addArticulo(Zapatilla);
+        d3.addArticulo(Poleron);
+        d3.addArticulo(Polera);
+        d3.addArticulo(Jeans);
+        d3.addArticulo(Jeans);
+        d3.calcPrecio();
+        d3.calcPrecioSinIva();
+        d3.calcIVA();
+        d3.calcPeso();
+        
+        O1.addDetalleOrden(d1);
+        O1.addDetalleOrden(d2);
+        O1.calcPrecio();
+        O1.calcPrecioSinIVA();
+        O1.calcIVA();
+        O1.calcPeso();
+        O2.addDetalleOrden(d3);
+        O2.calcPrecio();
+        O2.calcPrecioSinIVA();
+        O2.calcIVA();
+        O2.calcPeso();
+        
+        Tarjeta TAlfonse = new Tarjeta("Debito", "348392834322",40990, new Date());
+        Tarjeta TAlfonse2 = new Tarjeta("Debito", "348392834323",40990, new Date());
+        Tarjeta TAlfonse3 = new Tarjeta("Debito", "348392834324",40990, new Date());
+        Tarjeta TAlfonse4 = new Tarjeta("Debito", "348392834325",40990, new Date());
+        Tarjeta TAlfonse5 = new Tarjeta("Debito", "348392834326",40990, new Date());
+        Tarjeta TAlfonse6 = new Tarjeta("Debito", "348392834327",40990, new Date());
+        O1.addPago(TAlfonse);
+        O1.addPago(TAlfonse2);
+        O1.addPago(TAlfonse3);
+        O1.addPago(TAlfonse4);
+        O1.addPago(TAlfonse5);
+        O1.addPago(TAlfonse6);
+        
+        Efectivo EEdward = new Efectivo(60990, new Date());
+        O2.addPago(EEdward);
+        O2.addPago(EEdward);
+        O2.addPago(EEdward);
+        O2.addPago(EEdward);
+        
+        System.out.println(O1.toStringOrdenCompra()+"\n"+"\n"+"\n"+O2.toStringOrdenCompra());
     }
     
 }
